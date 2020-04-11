@@ -2,10 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const headers = require('./cors');
 const multipart = require('./multipartUtils');
+const http = require('http');
 
 // Path for the background image ///////////////////////
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
 ////////////////////////////////////////////////////////
+
+
+// const server = http.createServer((request, response) => {
+//   // magic happens here!
+// });
+
 
 let messageQueue = null;
 module.exports.initialize = (queue) => {
