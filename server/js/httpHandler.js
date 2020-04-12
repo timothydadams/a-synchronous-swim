@@ -49,6 +49,22 @@ module.exports.router = (req, res, next = ()=>{}) => {
     }
   }
 
+  if (req.method === 'POST' && req.url === '/background.jpg') {
+    var fileData = Buffer.alloc(0);
+    req.on('data', (chunk)=>{
+      fileData = Buffer.concat([fileData, chunk]);
+    });
+
+    req.on('end', () => {
+      var file = multipart.getFile(fileData);
+      fs.writeFile(module.exports.backgroundImageFile, file.data, (err) => {
+        res.writeHead(err ? 400 : 201, headers);
+        res.end();
+        next();
+      });
+    });
+  }
+
   //next();
   //keypressHandler.initialize.bind(this, res.write);
   //res.end();
